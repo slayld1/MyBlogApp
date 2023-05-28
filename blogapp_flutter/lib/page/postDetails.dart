@@ -1,15 +1,46 @@
+import 'package:blogapp_flutter/page/Signup.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast_web.dart';
+import 'package:http/http.dart' as http;
 class PostDetails extends StatelessWidget {
  // const PostDetails({super.key});
+  final id;
   final title;
   final image;
   final body;
   final author;
   final post_date;
-  PostDetails(this.title,this.image,this.body,this.author,this.post_date);
+  final userEmail;
+  PostDetails(
+    {
+     this.id, this.title,this.image,this.body,this.author,this.post_date
+    ,this.userEmail=""});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController commentsController=TextEditingController();
+    
+    
+   
+    Future addComments() async
+    {
+        var url=Uri.parse("http://192.168.1.105/uploads/addComments.php");
+       
+      var response = await http.post
+      (url,body: {
+        "comment":commentsController.text,
+        "user_email":this.userEmail,
+        "post_id":this.id,
+        
+      
+      });
+    if(response.statusCode==200)
+    {
+      Fluttertoast.showToast(msg: "Comments send sucessful");
+      Navigator.pop(context);
+    }
+    }
     return Scaffold
     (
       appBar: AppBar
@@ -87,6 +118,34 @@ class PostDetails extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField
                 (
+                  onSubmitted: (value)
+                  {
+                    commentsController.text=value;
+                  },
+                  onChanged: (value)
+                  {
+                    if(this.userEmail=="")
+                    {
+                      showDialog(context: context, builder: (context)=>AlertDialog
+                      (
+                        title: Text('Message'),
+                        content: Text("Login first then try again."),
+                        actions: 
+                        [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom
+                            (primary: Colors.red,
+
+                            ),
+                            onPressed: ()
+                            {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
+                            }, child: Text("Login"))
+                        ],
+                      ));
+
+                    }
+                  },
                   decoration: InputDecoration(labelText: 'Enter comments'),
                 ),
               ),
@@ -96,7 +155,9 @@ class PostDetails extends StatelessWidget {
                 (
                   color: Colors.amber,
                   child: Text('Publish',style: TextStyle(color: Colors.white),),
-                  onPressed: (){},
+                  onPressed: (){
+                    addComments();
+                  },
                 ),
               )
             ]),                  

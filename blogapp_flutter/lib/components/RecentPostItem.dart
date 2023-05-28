@@ -16,7 +16,7 @@ class _RecentPostItemState extends State<RecentPostItem> {
   
   Future recentPostData()async
   {
-    var url=Uri.parse("http://192.168.1.100/uploads/postAll.php");
+    var url=Uri.parse("http://192.168.1.105/uploads/postAll.php");
     var response=await http.get(url,headers: {"Accept":"application/json"});
     if (response.statusCode==200)
     {
@@ -48,7 +48,7 @@ class _RecentPostItemState extends State<RecentPostItem> {
       {
         return RecentItem
         (
-          'http://192.168.1.100/${recentPost[index]['image']}',
+          'http://192.168.1.105/uploads/${recentPost[index]['image']}',
            recentPost[index]['author'],
            recentPost[index]['title'],
            recentPost[index]['body'],
@@ -102,20 +102,23 @@ class _RecentItemState extends State<RecentItem> {
                         (
                           builder: (context)=>PostDetails
                           (
-                    widget.title,
-                    widget.image,
+                    title:widget.title,
+                    image:widget.image,
                    
-                    widget.body,
-                    widget.author,
-                    widget.create_date
+                    body:widget.body,
+                     author:widget.author,
+                    post_date:widget.create_date
                   )));
                       debugPrint(widget.title);
                     },
-                     child: Text
-                     (
-                      widget.title,
-                     style: TextStyle
-                     (fontSize: 20,fontFamily: 'Nasalization'),),
+                     child: Container(
+                      width: 300,
+                       child: Text
+                       (
+                        widget.title,
+                       style: TextStyle
+                       (fontSize: 20,fontFamily: 'Nasalization'),),
+                     ),
                    ),
             ),
             Padding(

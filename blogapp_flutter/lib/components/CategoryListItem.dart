@@ -19,7 +19,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
   List categories= List.empty();
   Future getAllCategory()async
   {
-    var url= Uri.parse("http://192.168.1.100/uploads/categoryAll.php");
+    var url= Uri.parse("http://192.168.1.105/uploads/categoryAll.php");
     var response =await http.get(url);
     if(response.statusCode==200){
       var jsonData=jsonDecode(response.body);
@@ -213,12 +213,12 @@ class _NewPostItemState extends State<NewPostItem> {
               onTap:(){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> PostDetails
                   (
-                    widget.title,
-                    widget.image,
+                    title:widget.title,
+                    image:widget.image,
                    
-                    widget.body,
-                     widget.author,
-                    widget.post_date
+                    body:widget.body,
+                     author:widget.author,
+                    post_date:widget.post_date
                   
 
                   ),));

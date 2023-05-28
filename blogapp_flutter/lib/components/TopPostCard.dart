@@ -4,7 +4,8 @@ import 'package:blogapp_flutter/page/postDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 class TopPostCard extends StatefulWidget {
-  //const TopPostCard({super.key});
+  final userEmail;
+  TopPostCard({this.userEmail});
 
   @override
   State<TopPostCard> createState() => _TopPostCardState();
@@ -16,7 +17,7 @@ class _TopPostCardState extends State<TopPostCard> {
   
   Future ShowAllPost()async
   {
-    var url=Uri.parse("http://192.168.1.100/uploads/postAll.php");
+    var url=Uri.parse("http://192.168.1.105/uploads/postAll.php");
     var response=await http.get(url,headers: {"Accept":"application/json"});
     if (response.statusCode==200)
     {
@@ -49,8 +50,11 @@ class _TopPostCardState extends State<TopPostCard> {
         itemBuilder: (context,index)
         {
             return NewPostItem
+
+            
             (
-              'http://192.168.1.100/${postData[index]['image']}',
+              postData[index]['id'],
+              'http://192.168.1.105/uploads/${postData[index]['image']}',
               postData[index]['author'] ,
               postData[index]['post_date'].toString(),
               postData[index]['comments'].toString(),
@@ -59,6 +63,7 @@ class _TopPostCardState extends State<TopPostCard> {
               postData[index]['body'].toString(),
               postData[index]['categoryName'].toString(),
               postData[index]['create_date'].toString(),
+              widget.userEmail
              
             );
           print(postData[index]['post_date']);
@@ -71,6 +76,7 @@ class _TopPostCardState extends State<TopPostCard> {
   }
 }
 class NewPostItem extends StatefulWidget {
+  final id;
   final image;
   final author;
   final post_date;
@@ -80,7 +86,10 @@ class NewPostItem extends StatefulWidget {
   final body;
   final category_name;
   final create_date;
-  NewPostItem(this.image,this.author,this.post_date,this.comments,this.total_like,this.title,this.body,this.category_name,this.create_date);
+  final userEmail;
+  
+  NewPostItem(
+    this.id,this.image,this.author,this.post_date,this.comments,this.total_like,this.title,this.body,this.category_name,this.create_date,this.userEmail);
   //const NewPostItem({super.key});
   
 
@@ -195,15 +204,16 @@ class _NewPostItemState extends State<NewPostItem> {
               onTap:(){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> PostDetails
                   (
-                    widget.title,
-                    widget.image,
+                    id:widget.id,
+                   title: widget.title,
+                    image:widget.image,
                    
-                    widget.body,
-                    widget.author,
-                    widget.post_date
-                  
+                    body:widget.body,
+                    author:widget.author,
+                   post_date: widget.post_date,
+                    userEmail:widget.userEmail,
 
-                  ),));
+                  ),),);
                         } ,
               ),
             
