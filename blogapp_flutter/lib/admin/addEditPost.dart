@@ -23,7 +23,7 @@ class _AddEditPostState extends State<AddEditPost> {
 
   String? selectedCategory;
   List categoryItem = [];
-
+TextEditingController author = TextEditingController();
   TextEditingController title = TextEditingController();
   TextEditingController body = TextEditingController();
   bool editMode = false;
@@ -39,11 +39,11 @@ class _AddEditPostState extends State<AddEditPost> {
 
   Future addEditPost() async {
     if (editMode) {
-      var uri = Uri.parse("http://192.168.1.105/uploads/updatePost.php");
+      var uri = Uri.parse("http://192.168.1.103/uploads/updatePost.php");
       var request = http.MultipartRequest("POST", uri);
       request.fields['title'] = title.text;
       request.fields['body'] = body.text;
-      request.fields['author'] = widget.author;
+      request.fields['author'] = author.text;
       request.fields['category_name'] = selectedCategory!;
       if (_image != null) {
         var pic = await http.MultipartFile.fromPath('image', _image!.path);
@@ -56,7 +56,7 @@ class _AddEditPostState extends State<AddEditPost> {
         print(title.text);
       }
     } else {
-      var uri = Uri.parse("http://192.168.1.105/uploads/addPost.php");
+      var uri = Uri.parse("http://192.168.1.103/uploads/addPost.php");
       var request = http.MultipartRequest("POST", uri);
       request.fields['title'] = title.text;
       request.fields['body'] = body.text;
@@ -76,7 +76,7 @@ class _AddEditPostState extends State<AddEditPost> {
   }
 
   Future getAllCategory() async {
-    var url = Uri.parse("http://192.168.1.105/uploads/categoryAll.php");
+    var url = Uri.parse("http://192.168.1.103/uploads/categoryAll.php");
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
@@ -126,6 +126,15 @@ class _AddEditPostState extends State<AddEditPost> {
             decoration: InputDecoration(labelText: 'Post Body'),
           ),
         ),
+         Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField
+          (
+            controller: body,
+            maxLines: 1,
+            decoration: InputDecoration(labelText: 'Author Name'),
+          ),
+        ),
         IconButton(onPressed: ()
         {
          choiceImage();
@@ -136,7 +145,7 @@ class _AddEditPostState extends State<AddEditPost> {
      
      
      editMode ? Container
-     (child: Image.network("http://192.168.1.105/uploads/${widget.postList[widget.index]['image']}"),width: 100,height: 100,): Text('data'),
+     (child: Image.network("http://192.168.1.103/uploads/${widget.postList[widget.index]['image']}"),width: 100,height: 100,): Text('data'),
             SizedBox(height: 20,),
 
       Container

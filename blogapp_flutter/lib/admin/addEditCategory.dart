@@ -25,7 +25,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
     if(categoryNameController.text!="")
     {  if(editMode)
     {
-      var url=Uri.parse("http://192.168.1.105/uploads/updateCategory.php");
+      var url=Uri.parse("http://192.168.1.103/uploads/updateCategory.php");
       var response = await http.post
       (url,body: {"id":widget.categoryList[widget.index]['id'],"name":categoryNameController.text});
     if(response.statusCode==200)
@@ -51,7 +51,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
     }
     else
     {
-       var url=Uri.parse("http://192.168.1.105/uploads/addCategory.php");
+       var url=Uri.parse("http://192.168.1.103/uploads/addCategory.php");
       var response = await http.post
       (url,body: {"name":categoryNameController.text});
     if(response.statusCode==200)

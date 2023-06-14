@@ -1,11 +1,13 @@
 import 'package:blogapp_flutter/admin/categoryDetails.dart';
 import 'package:blogapp_flutter/admin/postDetails.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart'as http;
 import '../main.dart';
 import '../page/ContactUs.dart';
 import '../page/Login.dart';
+import '../page/UnSeenNotificationPage.dart';
 import '../page/aboutUs.dart';
+import 'package:badges/badges.dart' as badges;
 class Dashboard extends StatefulWidget
 {
   final name;
@@ -22,9 +24,36 @@ State<Dashboard> createState() =>_DashboardState();
 }
 class _DashboardState extends State<Dashboard>
 {
- 
+  bool isSeen=true;
+
+  var total;
+  Future getTotalUnSeenNotification()async
+  {
+
+    var url= Uri.parse("http://192.168.1.103/uploads/selectCommentNotification.php");
+    var response=await http.get(url);
+    if(response.statusCode==200)
+    {
+      setState(() {
+        total=response.body;
+
+      });
+      print(total);
+
+    }
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getTotalUnSeenNotification();
+  }
   Widget build(BuildContext context)
   {
+   
+
+
     Widget menuDrawer()
 {
 return Drawer(
@@ -131,7 +160,43 @@ return Drawer(
 );
 }
     return Scaffold(
-      appBar: AppBar(title: Text('Dashboard'),),
+      appBar: AppBar(title: Text('Dashboard'),
+      actions: 
+      [
+        isSeen?
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: InkWell
+          (
+            onTap: ()
+            {
+              
+              Navigator.push(context,MaterialPageRoute(builder: (context)=>UnSeenNotificationPage()));
+              
+              debugPrint("seen");
+            },
+            child: badges.Badge
+            (
+              badgeContent:Text('$total',style: TextStyle(color: Colors.white),),
+              child: Icon(Icons.notifications_active),
+            )
+          ),
+        ):
+
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: InkWell
+          (
+            onTap: (){},
+            child: badges.Badge
+            (
+              badgeContent:Text("0",style: TextStyle(color:Colors.white ),),
+              child: Icon(Icons.notifications_none),
+            )
+          ),
+        ),
+      ],
+      ),
       drawer: menuDrawer(),
       body: ListView(children: [myGridView()]),
     );

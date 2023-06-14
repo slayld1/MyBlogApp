@@ -15,9 +15,10 @@ PostDetails(this.author);
 
 class _PostDetailsState extends State<PostDetails> {
   List post =List.empty();
-  Future getAllPost () async
+  
+ /* Future getAllPost (String authorname) async
  {
-  var url= Uri.parse("http://192.168.1.105/uploads/postAll.php");
+  var url= Uri.parse("http://192.168.1.105/uploads/getblogbyauthor.php?authorname=$authorname");
   var response=await http.get(url);
   if (response.statusCode==200)
   {
@@ -30,10 +31,43 @@ class _PostDetailsState extends State<PostDetails> {
  }
  void initState()
  {  super.initState();
-  getAllPost () ;
+  getAllPost (widget.author) ;
 
- }
- 
+ }*/
+ Future<List<dynamic>> getAllPost(String authorname) async {
+  var url = Uri.parse("http://192.168.1.103/uploads/postAll.php");
+var response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    var jsonData = jsonDecode(response.body);
+    return List<dynamic>.from(jsonData);
+  } else {
+    throw Exception('Bloglar getirilirken bir hata oluştu.');
+  }
+}
+Future showUserPosts(String userName) async {
+  var url = Uri.parse("http://192.168.1.103/uploads/getlogbyauthor.php");
+  var response = await http.post(url, body: {'name': userName});
+  
+  if (response.statusCode == 200) {
+    var jsonData = jsonDecode(response.body);
+    return jsonData;
+  }
+}
+
+
+void initState() {
+  super.initState();
+  var authorname="";
+  getAllPost(widget.author).then((posts) {
+    setState(() {
+      post = posts;
+    });
+  }).catchError((error) {
+    print("Hata: $error");
+  });
+}
+
  
  
   @override
@@ -46,7 +80,7 @@ class _PostDetailsState extends State<PostDetails> {
         IconButton(onPressed: ()
         {
           Navigator.push(context, MaterialPageRoute(builder: (context)=>AddEditPost(author: widget.author,),),).whenComplete(() {
-            getAllPost();
+            getAllPost(widget.author);
             });
         }, icon: Icon(Icons.add),)
       ],
@@ -66,7 +100,7 @@ class _PostDetailsState extends State<PostDetails> {
                   {
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>AddEditPost(postList: post,index: index,author: widget.author,),)).whenComplete(() 
                     {
-                      getAllPost();
+                      getAllPost(widget.author);
                     });
                   },),
                  
@@ -99,13 +133,13 @@ class _PostDetailsState extends State<PostDetails> {
                 ),
               onPressed: () async 
               {
-              var url=Uri.parse("http://192.168.1.105/uploads/deletePost.php");
+              var url=Uri.parse("http://192.168.1.103/uploads/deletePost.php");
               var response=await http.post(url,body: {"id":post[index]['id']});
               if(response.statusCode==200)
               {
                 Fluttertoast.showToast(msg: 'Post Deleted Successful');
                 setState(() {
-                  getAllPost();
+                  getAllPost(widget.author);
                 });
                 Navigator.pop(context);
                  

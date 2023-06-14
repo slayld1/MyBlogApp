@@ -16,7 +16,7 @@ class _RecentPostItemState extends State<RecentPostItem> {
   
   Future recentPostData()async
   {
-    var url=Uri.parse("http://192.168.1.105/uploads/postAll.php");
+    var url=Uri.parse("http://192.168.1.103/uploads/postAll.php");
     var response=await http.get(url,headers: {"Accept":"application/json"});
     if (response.statusCode==200)
     {
@@ -48,7 +48,7 @@ class _RecentPostItemState extends State<RecentPostItem> {
       {
         return RecentItem
         (
-          'http://192.168.1.105/uploads/${recentPost[index]['image']}',
+          'http://192.168.1.103/uploads/${recentPost[index]['image']}',
            recentPost[index]['author'],
            recentPost[index]['title'],
            recentPost[index]['body'],

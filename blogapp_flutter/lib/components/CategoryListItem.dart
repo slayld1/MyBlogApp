@@ -19,7 +19,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
   List categories= List.empty();
   Future getAllCategory()async
   {
-    var url= Uri.parse("http://192.168.1.105/uploads/categoryAll.php");
+    var url= Uri.parse("http://192.168.1.103/uploads/categoryAll.php");
     var response =await http.get(url);
     if(response.statusCode==200){
       var jsonData=jsonDecode(response.body);

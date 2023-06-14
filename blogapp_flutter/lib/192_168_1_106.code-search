@@ -1,0 +1,108 @@
+# Query: 192.168.1.106
+# ContextLines: 1
+
+23 results - 12 files
+
+lib\main.dart:
+   65    {
+   66:     var url=Uri.parse("http://192.168.1.104/uploads/postAll.php");
+   67      var response=await http.get(url,headers: {"Accept":"application/json"});
+
+  296    {
+  297:     var url=Uri.parse("http://192.168.1.104/uploads/SearchPost.php");
+  298      var response=await http.post(url,body: {'title':query});
+
+  348                               (
+  349:                   child: Image.network('http://192.168.1.104/uploads/${list['image']}',height: 250,),
+  350                     
+
+lib\admin\addEditCategory.dart:
+  27      {
+  28:       var url=Uri.parse("http://192.168.1.104/uploads/updateCategory.php");
+  29        var response = await http.post
+
+  53      {
+  54:        var url=Uri.parse("http://192.168.1.104/uploads/addCategory.php");
+  55        var response = await http.post
+
+lib\admin\addEditPost.dart:
+   41      if (editMode) {
+   42:       var uri = Uri.parse("http://192.168.1.104/uploads/updatePost.php");
+   43        var request = http.MultipartRequest("POST", uri);
+
+   58      } else {
+   59:       var uri = Uri.parse("http://192.168.1.104/uploads/addPost.php");
+   60        var request = http.MultipartRequest("POST", uri);
+
+   78    Future getAllCategory() async {
+   79:     var url = Uri.parse("http://192.168.1.104/uploads/categoryAll.php");
+   80      var response = await http.get(url);
+
+  138       editMode ? Container
+  139:      (child: Image.network("http://192.168.1.104/uploads/${widget.postList[widget.index]['image']}"),width: 100,height: 100,): Text('data'),
+  140              SizedBox(height: 20,),
+
+lib\admin\categoryDetails.dart:
+  19   {
+  20:   var url= Uri.parse("http://192.168.1.104/uploads/categoryAll.php");
+  21    var response=await http.get(url);
+
+  66          {
+  67:           var url= Uri.parse("http://192.168.1.104/uploads/deleteCategory.php");
+  68            var response= await http.post(url, body: {"id":category[index]['id']});
+
+lib\admin\postDetails.dart:
+   19   {
+   20:   var url= Uri.parse("http://192.168.1.104/uploads/postAll.php");
+   21    var response=await http.get(url);
+
+  101                {
+  102:               var url=Uri.parse("http://192.168.1.104/uploads/deletePost.php");
+  103                var response=await http.post(url,body: {"id":post[index]['id']});
+
+lib\components\CategoryListItem.dart:
+  21    {
+  22:     var url= Uri.parse("http://192.168.1.104/uploads/categoryAll.php");
+  23      var response =await http.get(url);
+
+lib\components\RecentPostItem.dart:
+  18    {
+  19:     var url=Uri.parse("http://192.168.1.104/uploads/postAll.php");
+  20      var response=await http.get(url,headers: {"Accept":"application/json"});
+
+  50          (
+  51:           'http://192.168.1.104/uploads/${recentPost[index]['image']}',
+  52             recentPost[index]['author'],
+
+lib\components\TopPostCard.dart:
+  19    {
+  20:     var url=Uri.parse("http://192.168.1.104/uploads/postAll.php");
+  21      var response=await http.get(url,headers: {"Accept":"application/json"});
+
+  56                postData[index]['id'],
+  57:               'http://192.168.1.104/uploads/${postData[index]['image']}',
+  58                postData[index]['author'] ,
+
+lib\page\Login.dart:
+  21    Future login() async {
+  22:     var url = Uri.parse("http://192.168.1.104/uploads/login.php");
+  23      var response = await http.post(url, body: {
+
+lib\page\postDetails.dart:
+  29      {
+  30:         var url=Uri.parse("http://192.168.1.104/uploads/addComments.php");
+  31         
+
+lib\page\SelectCategoryBy.dart:
+  19     {
+  20:     var url=Uri.parse("http://192.168.1.104/flutter_blog/categoryByPost.php");
+  21      var response=await http.post(url,body:{'name': widget.category_name});
+
+  43              (
+  44:              'http://192.168.1.104/uploads/${categoryByPost[index]['image']}',
+  45                categoryByPost[index]['author'] ,
+
+lib\page\Signup.dart:
+  21    {
+  22:     var url=Uri.parse("http://192.168.1.104/uploads/register.php");
+  23  

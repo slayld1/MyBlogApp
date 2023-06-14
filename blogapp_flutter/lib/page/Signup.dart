@@ -19,7 +19,7 @@ TextEditingController name=TextEditingController();
   TextEditingController pass=TextEditingController();
   Future signUp () async
   {
-    var url=Uri.parse("http://192.168.1.105/uploads/register.php");
+    var url=Uri.parse("http://192.168.1.103/uploads/register.php");
 
     var response= await http.post(url,body: {"name":name.text,"username":user.text,"password":pass.text});
  

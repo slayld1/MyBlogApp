@@ -17,7 +17,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
  Future getAllCategory () async
  {
-  var url= Uri.parse("http://192.168.1.105/uploads/categoryAll.php");
+  var url= Uri.parse("http://192.168.1.106/uploads/categoryAll.php");
   var response=await http.get(url);
   if (response.statusCode==200)
   {
@@ -64,7 +64,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
         title: Text(category[index]['name']),
         trailing:  IconButton(onPressed: ()async
         {
-          var url= Uri.parse("http://192.168.1.105/uploads/deleteCategory.php");
+          var url= Uri.parse("http://192.168.1.103/uploads/deleteCategory.php");
           var response= await http.post(url, body: {"id":category[index]['id']});
           if(response.statusCode==200)
           {

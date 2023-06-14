@@ -17,7 +17,7 @@ class _TopPostCardState extends State<TopPostCard> {
   
   Future ShowAllPost()async
   {
-    var url=Uri.parse("http://192.168.1.105/uploads/postAll.php");
+    var url=Uri.parse("http://192.168.1.103/uploads/postAll.php");
     var response=await http.get(url,headers: {"Accept":"application/json"});
     if (response.statusCode==200)
     {
@@ -54,7 +54,7 @@ class _TopPostCardState extends State<TopPostCard> {
             
             (
               postData[index]['id'],
-              'http://192.168.1.105/uploads/${postData[index]['image']}',
+              'http://192.168.1.103/uploads/${postData[index]['image']}',
               postData[index]['author'] ,
               postData[index]['post_date'].toString(),
               postData[index]['comments'].toString(),

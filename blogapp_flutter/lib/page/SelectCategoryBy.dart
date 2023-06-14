@@ -14,10 +14,15 @@ class SelectCategoryBy extends StatefulWidget {
 }
 
 class _SelectCategoryByState extends State<SelectCategoryBy> {
-  List categoryByPost = List.empty();
+  List<dynamic> categoryByPost = [];
+  void initState()
+  {
+    super.initState();
+    categoryByData();
+  }
   Future categoryByData()async
    {
-    var url=Uri.parse("http://192.168.1.105/flutter_blog/categoryByPost.php");
+    var url=Uri.parse("http://192.168.1.103/uploads/categoryByPost.php");
     var response=await http.post(url,body:{'name': widget.category_name});
     if(response.statusCode==200){
       var jsonData=jsonDecode(response.body);
@@ -41,15 +46,15 @@ class _SelectCategoryByState extends State<SelectCategoryBy> {
 
           return NewPostItem
             (
-             'http://192.168.1.105/uploads/${categoryByPost[index]['image']}',
+             'http://192.168.1.103/uploads/${categoryByPost[index]['image']}',
               categoryByPost[index]['author'] ,
               categoryByPost[index]['post_date'].toString(),
               categoryByPost[index]['comments'].toString(),
-              categoryByPost[index]['totalLike'].toString(),
+              categoryByPost[index]['total_like'].toString(),
               categoryByPost[index]['title'].toString(),
               categoryByPost[index]['body'].toString(),
               categoryByPost[index]['categoryName'].toString(),
-              categoryByPost[index]['createDate'].toString(),
+              categoryByPost[index]['create_date'].toString(),
              
             );
         }
