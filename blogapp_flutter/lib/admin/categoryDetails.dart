@@ -17,7 +17,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
  Future getAllCategory () async
  {
-  var url= Uri.parse("http://192.168.1.106/uploads/categoryAll.php");
+  var url= Uri.parse("http://192.168.1.103/uploads/categoryAll.php");
   var response=await http.get(url);
   if (response.statusCode==200)
   {

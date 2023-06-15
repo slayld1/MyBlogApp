@@ -17,11 +17,13 @@ class _SignUpState extends State<SignUp> {
 TextEditingController name=TextEditingController();
  TextEditingController user=TextEditingController();
   TextEditingController pass=TextEditingController();
+  TextEditingController profileImage = TextEditingController();
+
   Future signUp () async
   {
     var url=Uri.parse("http://192.168.1.103/uploads/register.php");
 
-    var response= await http.post(url,body: {"name":name.text,"username":user.text,"password":pass.text});
+    var response= await http.post(url,body: {"name":name.text,"username":user.text,"password":pass.text,"image":profileImage.text});
  
     if(response.statusCode==200)
     {
@@ -155,9 +157,24 @@ TextEditingController name=TextEditingController();
                 ),
               ),
               )),
+              Positioned(
+              top:340 ,
+              child: Container
+              (
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                   controller: profileImage,
+                decoration: InputDecoration(
+                labelText: 'Profile Image',
+                ),
+                ),
+              ),
+              )),
 
                Positioned(
-              top:350 ,
+              top:430 ,
               child: Container
               (
                 width: MediaQuery.of(context).size.width,
@@ -171,7 +188,7 @@ TextEditingController name=TextEditingController();
               )),
         
          Positioned(
-              top:420 ,
+              top:480 ,
               child: Container
               (
                 width: MediaQuery.of(context).size.width,
@@ -183,7 +200,7 @@ TextEditingController name=TextEditingController();
               ),
               )),
     Positioned(
-              top:480 ,
+              top:500 ,
               child: Container
               (
                 width: MediaQuery.of(context).size.width,

@@ -54,7 +54,7 @@ bool isFollowing =false;
 
   if (response.statusCode == 200) {
     setState(() {
-      followedUsers.add(widget.author);
+      isFollowing = true;
     });
     Fluttertoast.showToast(msg: "Kullanıcıyı takip ediyorsunuz");
   } else {
@@ -62,6 +62,26 @@ bool isFollowing =false;
   }
 }
 
+void checkIsFollowing() async {
+  var response = await http.post(
+    Uri.parse("http://192.168.1.103/uploads/CheckFollow.php"),
+    body: {
+      "user_email": widget.userEmail,
+      "followed_user_email": widget.author,
+    },
+  );
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    var isFollowingValue = data['isFollowing'];
+
+    setState(() {
+      isFollowing = (isFollowingValue == 1);
+    });
+  } else {
+    Fluttertoast.showToast(msg: "Takip durumu kontrol edilemedi");
+  }
+}
 
 
 
@@ -106,6 +126,7 @@ bool isFollowing =false;
   {
     super.initState();
     getLikes();
+    checkIsFollowing();
     flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
     var android=AndroidInitializationSettings("@mipmap/ic_launcher");
       var ios=DarwinInitializationSettings();
@@ -394,14 +415,14 @@ bool isFollowing =false;
               ),
             ),
             ElevatedButton(
-              onPressed: ()
-              {
-                followUser();
-              }, 
-              child: Text(
-                isFollowing?'Takip Ediliyor' : 'Takip et'
-              ),
-               ),
+  onPressed: () {
+    followUser();
+  },
+  child: Text(
+    isFollowing ? 'Takip Ediliyor' : 'Takip et',
+  ),
+),
+
             SizedBox(width: 5.0,),
             Padding(
               padding: const EdgeInsets.all(8.0),

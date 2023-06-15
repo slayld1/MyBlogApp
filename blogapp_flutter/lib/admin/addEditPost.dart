@@ -41,9 +41,10 @@ TextEditingController author = TextEditingController();
     if (editMode) {
       var uri = Uri.parse("http://192.168.1.103/uploads/updatePost.php");
       var request = http.MultipartRequest("POST", uri);
+      request.fields['id']=widget.postList[widget.index]['id'];
       request.fields['title'] = title.text;
       request.fields['body'] = body.text;
-      request.fields['author'] = author.text;
+      request.fields['author'] = widget.author;
       request.fields['category_name'] = selectedCategory!;
       if (_image != null) {
         var pic = await http.MultipartFile.fromPath('image', _image!.path);
@@ -130,7 +131,7 @@ TextEditingController author = TextEditingController();
           padding: const EdgeInsets.all(8.0),
           child: TextField
           (
-            controller: body,
+            
             maxLines: 1,
             decoration: InputDecoration(labelText: 'Author Name'),
           ),

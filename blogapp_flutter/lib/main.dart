@@ -143,6 +143,7 @@ Widget menuDrawer() {
             style: TextStyle(color: Colors.grey),
           ),
         ),
+        if (widget.name != "Guest") 
         const SizedBox(
           height: 10,
         ),
@@ -163,7 +164,7 @@ Widget menuDrawer() {
               style: TextStyle(color: Colors.deepOrangeAccent),
             ),
           ),
-         
+          if (widget.name != "Guest") 
           ListTile(
             onTap: () {
               Navigator.push(
@@ -180,10 +181,12 @@ Widget menuDrawer() {
               style: TextStyle(color: Color.fromARGB(255, 89, 157, 141)),
             ),
           ),
+           if (widget.name != "Guest") 
           const SizedBox
           (
             height: 10,
           ),
+          if (widget.name != "Guest") 
            ListTile(
             onTap: () {
               Navigator.push(
@@ -199,10 +202,14 @@ Widget menuDrawer() {
               'Takip Ettiklerim',
               style: TextStyle(color: Color.fromARGB(255, 136, 140, 150)),
             ),
-          ), const SizedBox
+            
+          ),
+          if (widget.name != "Guest") 
+           const SizedBox
           (
             height: 10,
           ),
+           if (widget.name != "Guest") 
            ListTile(
             onTap: () {
               Navigator.push(
@@ -355,7 +362,7 @@ class SearchPost extends SearchDelegate<String>
   
   Future ShowAllPost()async
   {
-    var url=Uri.parse("http://192.168.1.103/uploads/SearchPost.php");
+    var url=Uri.parse("http://192.168.1.102/uploads/SearchPost.php");
     var response=await http.post(url,body: {'title':query});
     if (response.statusCode==200)
     {
@@ -407,7 +414,7 @@ class SearchPost extends SearchDelegate<String>
                Center(
                  child: Container
                              (
-                  child: Image.network('http://192.168.1.103/uploads/${list['image']}',height: 250,),
+                  child: Image.network('http://192.168.1.102/uploads/${list['image']}',height: 250,),
                    
                              ),
                ),
